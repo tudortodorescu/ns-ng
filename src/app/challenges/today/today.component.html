@@ -3,11 +3,7 @@
   [showBackButton]="false"
 ></ns-action-bar>
 <StackLayout>
-  <Label padding="20" fontSize="18" text="Today!"></Label>
-  <Button
-    text="Click me"
-    class="standard"
-    (tap)="onDemo()"
-    [ngClass]="{ highlighted: isHighlighted }"
-  ></Button>
+  <Label class="h1" padding="20" fontSize="18" text="Progress loading..."></Label>
+  <Progress class="m-20" value="50"></Progress>
+  <ActivityIndicator busy="true"></ActivityIndicator>
 </StackLayout>

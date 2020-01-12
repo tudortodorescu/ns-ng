@@ -1,3 +1,5 @@
 TabView {
   android-selected-tab-highlight-color: #7c015d;
+  selected-tab-text-color: #830083;
+  tab-text-color: #000000;
 }

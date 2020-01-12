@@ -1,4 +1,5 @@
-@import "./app.common.css";
+@import "_app.common";
+@import '~nativescript-theme-core/scss/platforms/index.android';
 
 .btn {
     background: white;

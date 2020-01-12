@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef, ViewContainerRef } from '@angular/core';
 import { UIService } from "./shared/ui.service";
 import { Subscription } from "rxjs";
 import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular/side-drawer-directives";
