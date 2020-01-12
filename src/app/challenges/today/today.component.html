@@ -4,4 +4,10 @@
 ></ns-action-bar>
 <StackLayout>
   <Label padding="20" fontSize="18" text="Today!"></Label>
+  <Button
+    text="Click me"
+    class="standard"
+    (tap)="onDemo()"
+    [ngClass]="{ highlighted: isHighlighted }"
+  ></Button>
 </StackLayout>
