@@ -1,6 +1,7 @@
 <ns-action-bar title="Current Challenge" [showBackButton]="false">
   <ActionItem
     ios.position="right"
+    ios:visibility="collapsed"
     android.position="actionBar"
     [nsRouterLink]="['/challenges/replace']"
     pageTransition="slideLeft"
