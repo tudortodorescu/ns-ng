@@ -1,17 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PageRoute } from 'nativescript-angular/router';
 
 @Component({
-  selector: 'ns-challenge-edit',
-  templateUrl: './challenge-edit.component.html',
-  styleUrls: ['./challenge-edit.component.css']
+    selector: 'ns-challenge-edit',
+    templateUrl: './challenge-edit.component.html',
+    styleUrls: ['./challenge-edit.component.css']
 })
-export class ChallengeEditComponent {
+export class ChallengeEditComponent implements OnInit {
 
-    // @Output() input = new EventEmitter<string>();
-    // currentChallenge: string = '';
+    isCreating: boolean = true;
 
-    // onAddChallenge() {
-    //     this.input.emit(this.currentChallenge);
-    // }
+    constructor(
+        private activatedRoute: ActivatedRoute,
+        private pageRoute: PageRoute
+    ) { }
+
+    ngOnInit() {
+        // this.activatedRoute.paramMap.subscribe((paramMap) => {
+        //     console.log('paramMap', paramMap.get('mode'));
+        // });
+
+        this.pageRoute.activatedRoute.subscribe(activatedRoute => {
+            activatedRoute.paramMap.subscribe(paramMap => {
+                if (!paramMap.has('mode')) {
+                    this.isCreating = true;
+                } else {
+                    this.isCreating = paramMap.get('mode') !== 'edit';
+                }
+            })
+        });
+    }
 
 }

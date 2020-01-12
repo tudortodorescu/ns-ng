@@ -11,6 +11,7 @@ import { ActionBarComponent } from "./shared/ui/action-bar/action-bar.component"
 import { ChallengeTabsComponent } from "./challenges/challenge-tabs/challenge-tabs.component";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular/side-drawer-directives";
 import { UIService } from "./shared/ui.service";
+import { DayModalComponent } from './challenges/day-modal/day-modal.component';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -27,11 +28,11 @@ import { UIService } from "./shared/ui.service";
         AuthComponent,
         TodayComponent,
         ActionBarComponent,
-        ChallengeTabsComponent
+        ChallengeTabsComponent,
+        DayModalComponent
     ],
-    providers: [
-        UIService
-    ],
-    schemas: [NO_ERRORS_SCHEMA]
+    providers: [],
+    schemas: [NO_ERRORS_SCHEMA],
+    entryComponents: [DayModalComponent]
 })
-export class AppModule {}
+export class AppModule { }

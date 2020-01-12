@@ -1,9 +1,19 @@
-<!-- (tap)="onSignin()" -->
-<!-- nsRouterLink="/today" [clearHistory]="true" -->
-<Button
-    text="auth works!"
+<ns-action-bar
+  title="Login"
+  [showBackButton]="false"
+  [hasMenu]="false"
+></ns-action-bar>
+<StackLayout>
+  <Label
+    text="Welcome to Challenges App! Please login first"
+    padding="20"
+    fontSize="18"
+  ></Label>
+  <Button
+    text="Login"
     class="btn btn-primary"
     [nsRouterLink]="['/challenges']"
     pageTransition="flip"
     clearHistory="true"
-></Button>
+  ></Button>
+</StackLayout>

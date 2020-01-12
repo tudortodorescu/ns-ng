@@ -13,6 +13,7 @@ declare var android: any;
 export class ActionBarComponent {
     @Input() title: string;
     @Input() showBackButton: boolean = true;
+    @Input() hasMenu: boolean = true;
 
     constructor(
         private router: RouterExtensions,
