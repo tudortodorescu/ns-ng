@@ -1,6 +1,7 @@
-import { NgModule } from "@angular/core";
-import { ActionBarComponent, NativeScriptCommonModule } from "nativescript-angular/common";
+import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
+import { ActionBarComponent } from "./ui/action-bar/action-bar.component";
 
 @NgModule({
     imports: [
@@ -8,6 +9,7 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
         NativeScriptRouterModule
     ],
     declarations: [ActionBarComponent],
-    exports: [ActionBarComponent]
+    exports: [ActionBarComponent],
+    schemas: [NO_ERRORS_SCHEMA]
 })
 export class SharedModule { }

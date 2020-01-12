@@ -3,16 +3,14 @@
     ios.position="right"
     ios:visibility="collapsed"
     android.position="actionBar"
-    [nsRouterLink]="['/challenges/replace']"
-    pageTransition="slideLeft"
+    (tap)="onTapReplace()"
   >
     <Label text="Replace"></Label>
   </ActionItem>
   <ActionItem
     ios.position="right"
     android.position="actionBar"
-    [nsRouterLink]="['/challenges/edit']"
-    pageTransition="slideLeft"
+    (tap)="onTapEdit()"
   >
     <Label text="Edit"></Label>
   </ActionItem>

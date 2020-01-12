@@ -22,7 +22,7 @@ const routes: Routes = [{
             }
         ]
     },
-    { path: ':mode', component: ChallengeEditComponent },
+    { path: ':mode', loadChildren: '~/app/challenges/challenge-edit/challenge-edit.module#ChallengeEditModule' },
     { path: '', redirectTo: '/challenges/tabs', pathMatch: 'full' }
 ];
 
