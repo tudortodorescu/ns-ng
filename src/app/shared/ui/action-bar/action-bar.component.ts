@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { isAndroid, isIOS, Page } from 'tns-core-modules/ui/page';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { UIService } from '../../ui.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare var android: any;
 
@@ -18,7 +19,8 @@ export class ActionBarComponent {
     constructor(
         private router: RouterExtensions,
         private page: Page,
-        private uiService: UIService
+        private uiService: UIService,
+        private active: ActivatedRoute
     ) { }
 
     get android() {
@@ -35,7 +37,7 @@ export class ActionBarComponent {
             const backButton = androidToolbar.getNavigationIcon();
             if (backButton) {
                 backButton.setColorFilter(
-                    android.graphics.Color.parseColor('#171717'),
+                    android.graphics.Color.parseColor('#ffffff'),
                     (<any>android.graphics).PorterDuff.Mode.SRC_ATOP
                 );
             }
@@ -43,7 +45,8 @@ export class ActionBarComponent {
     }
 
     onGoBack() {
-        this.router.backToPreviousPage();
+        // this.router.backToPreviousPage();
+        this.router.navigate(['/challenges/tabs']);
     }
 
     onToggleMenu() {

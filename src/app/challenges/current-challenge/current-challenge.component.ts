@@ -9,7 +9,8 @@ import { RouterExtensions } from 'nativescript-angular/router';
     templateUrl: './current-challenge.component.html',
     styleUrls: [
         './current-challenge.component.common.css',
-        './current-challenge.component.css'
+        './current-challenge.component.ios.css',
+        './current-challenge.component.android.css'
     ]
 })
 export class CurrentChallengeComponent {
@@ -33,12 +34,12 @@ export class CurrentChallengeComponent {
 
     onTapReplace() {
         console.log('onTapReplace');
-        this.router.navigate(['challenges/replace']);
+        this.router.navigate(['/challenges/replace']);
     }
 
     onTapEdit() {
         console.log('onTapEdit');
-        this.router.navigate(['challenges/edit']);
+        this.router.navigate(['/challenges/edit']);
     }
 
 }

@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { PageRoute } from 'nativescript-angular/router';
 
 @Component({
     selector: 'ns-challenge-edit',
     templateUrl: './challenge-edit.component.html',
-    styleUrls: ['./challenge-edit.component.css']
+    styleUrls: ['./challenge-edit.component.scss']
 })
 export class ChallengeEditComponent implements OnInit {
 
     isCreating: boolean = true;
 
     constructor(
-        private activatedRoute: ActivatedRoute,
         private pageRoute: PageRoute
     ) { }
 
@@ -27,9 +25,5 @@ export class ChallengeEditComponent implements OnInit {
             })
         });
     }
-
-
-
-
 
 }

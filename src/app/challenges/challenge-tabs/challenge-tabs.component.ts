@@ -8,7 +8,8 @@ import { Page } from 'tns-core-modules/ui/page/page';
     templateUrl: './challenge-tabs.component.html',
     styleUrls: [
         './challenge-tabs.component.common.css',
-        './challenge-tabs.component.css'
+        './challenge-tabs.component.ios.css',
+        './challenge-tabs.component.android.css'
     ]
 })
 export class ChallengeTabsComponent implements OnInit {

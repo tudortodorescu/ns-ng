@@ -1,16 +1,45 @@
-@import '~@nativescript/theme/css/core';
-@import '~@nativescript/theme/css/purple';
 
-.btn {
-    border-width: 1;
-    width: 100%;
-    border-radius: 30%;
-    margin: 5 0;
-    font-weight: bold;
+@import '~@nativescript/theme/css/core';
+@import '~@nativescript/theme/css/default';
+@import './theme/_colors';
+@import '~@nativescript/theme/index';
+
+ActionBar {
+  background-color: $primary;
+  color: white;
 }
 
+.form {
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-field {
+  width: 80%;
+
+  .label {
+      color: $primary;
+      font-weight: bold;
+  }
+
+  .input {
+      border-bottom-width: 2;
+      border-color: $primary;
+      width: 100%;
+  }
+}
+
+// .btn {
+//     border-width: 1;
+//     width: 100%;
+//     border-radius: 30%;
+//     margin: 5 0;
+//     font-weight: bold;
+// }
+
 .form-control {
-  border-bottom-color: #830083;
+  border-bottom-color: $secondary;
   border-bottom-width: 2;
   margin: 5 0;
   font-size: 16;
@@ -19,7 +48,7 @@
 
 .drawer-container {
   margin-top: 23;
-  background: linear-gradient(140deg, #2b0c72, #5c3fa0);
+  background: linear-gradient(140deg, $secondary, $primary);
   flex-direction: column;
   justify-content: center;
   align-items: center;
