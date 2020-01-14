@@ -5,17 +5,21 @@ import { TodayComponent } from './today/today.component';
 import { CurrentChallengeComponent } from './current-challenge/current-challenge.component';
 import { SharedModule } from '../shared/shared.module';
 import { NativeScriptCommonModule } from 'nativescript-angular/common';
+import { ChallengeActionsModule } from './challenge-actions/challenge-actions.module';
+import { ChallengeCalendarComponent } from './challenge-calendar/challenge-calendar.component';
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
         ChallengesRoutingModule,
-        SharedModule
+        SharedModule,
+        ChallengeActionsModule
     ],
     declarations: [
         ChallengeTabsComponent,
         CurrentChallengeComponent,
-        TodayComponent
+        TodayComponent,
+        ChallengeCalendarComponent
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

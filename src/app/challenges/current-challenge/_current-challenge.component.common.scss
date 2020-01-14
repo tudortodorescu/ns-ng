@@ -1,8 +1,10 @@
-/* Add mobile styles for the component here.  */
-FlexboxLayout {
+@import "../../../theme/colors";
+
+.page {
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 20;
-    background: white;
 }
+
+

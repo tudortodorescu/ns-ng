@@ -5,26 +5,35 @@
     android.position="actionBar"
     (tap)="onTapReplace()"
   >
-    <Label text="Replace"></Label>
+    <Label
+      text="&#xf0fe;"
+      class="fa"
+      color="white"
+      fontSize="24"
+    ></Label>
   </ActionItem>
   <ActionItem
     ios.position="right"
     android.position="actionBar"
     (tap)="onTapEdit()"
   >
-    <Label text="Edit"></Label>
+    <Label
+      text="&#xf044;"
+      class="fa"
+      color="white"
+      fontSize="24"
+    ></Label>
   </ActionItem>
 </ns-action-bar>
-<StackLayout>
-  <Label
-    class="title"
-    padding="20"
-    text="The current challenge"
-    horizontalAlignment="center"
-  ></Label>
-  <Button
-    text="Change Status"
-    class="btn btn-primary"
-    (tap)="onChangeStatus()">
-  </Button>
-</StackLayout>
+<ScrollView>
+  <FlexboxLayout class="page">
+    <StackLayout marginBottom="20">
+      <Label class="h1" text="Take a walk every day"></Label>
+      <Label
+        class="body"
+        text="Walk for at least 20 minutes on every day of the week"
+      ></Label>
+    </StackLayout>
+    <ns-challenge-calendar></ns-challenge-calendar>
+  </FlexboxLayout>
+</ScrollView>

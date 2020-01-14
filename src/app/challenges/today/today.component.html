@@ -3,7 +3,14 @@
   [showBackButton]="false"
 ></ns-action-bar>
 <StackLayout>
-  <Label class="h1" padding="20" fontSize="18" text="Progress loading..."></Label>
-  <Progress class="m-20" value="50"></Progress>
-  <ActivityIndicator busy="true"></ActivityIndicator>
+  <Image
+    src="res://sonic"
+    stretch="none"
+    horizontalAlignment="center"
+    margin="30 auto"
+  ></Image>
+  <ns-challenge-actions
+    (actionSelect)="onActionSelected($event)"
+    cancelText="Reset"
+  ></ns-challenge-actions>
 </StackLayout>
