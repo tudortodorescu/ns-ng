@@ -8,10 +8,13 @@ import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angul
 import { DayModalComponent } from './challenges/day-modal/day-modal.component';
 import { SharedModule } from "./shared/shared.module";
 import { ChallengeActionsModule } from "./challenges/challenge-actions/challenge-actions.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     bootstrap: [AppComponent],
     imports: [
+        FormsModule,
+        ReactiveFormsModule,
         NativeScriptModule,
         NativeScriptFormsModule,
         NativeScriptUISideDrawerModule,
