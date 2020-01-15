@@ -1,19 +1,23 @@
 <ns-action-bar
-  title="Login"
+  [title]="isLogin ? 'Login' : 'Sign-up'"
   [showBackButton]="false"
   [hasMenu]="false"
 ></ns-action-bar>
 <FlexboxLayout>
   <StackLayout>
     <Label
-      text="Welcome to Challenges App! Please login first"
+      text="Welcome to Challenges App"
       padding="20"
       fontSize="18"
     ></Label>
   </StackLayout>
   <StackLayout [formGroup]="form" class="form">
     <StackLayout class="input-field">
-      <Label class="label" text="E-Mail" [ngClass]="{ invalid: false }"></Label>
+      <Label
+        class="label"
+        text="E-Mail"
+        [ngClass]="{ invalid: !emailControlIsValid }"
+      ></Label>
       <TextField
         class="input"
         returnKeyType="next"
@@ -21,9 +25,10 @@
         [autocorrect]="false"
         autocapitalizationType="none"
         formControlName="email"
+        #emailEl
       ></TextField>
       <Label
-        *ngIf="false"
+        *ngIf="!emailControlIsValid"
         text="*Please enter a valid E-Mail"
         color="red"
       ></Label>
@@ -32,7 +37,7 @@
       <Label
         class="label"
         text="Password"
-        [ngClass]="{ invalid: false }"
+        [ngClass]="{ invalid: !passwordControlIsValid }"
       ></Label>
       <TextField
         class="input"
@@ -42,20 +47,26 @@
         [secure]="true"
         hint="Min 6 characters"
         formControlName="password"
+        #passwordEl
       ></TextField>
       <Label
-        *ngIf="false"
-        text="*Please enter your password"
+        *ngIf="!passwordControlIsValid"
+        text="*Please enter a valid password which is 6 characters or more"
         color="red"
       ></Label>
     </StackLayout>
     <StackLayout class="input-field">
       <Button
-        class="btn -primary -rounded-lg"
+        class="-primary -rounded-lg"
         marginTop="20"
-        [nsRouterLink]="['/challenges']"
-        text="Login"
-        [isEnabled]="true"
+        (tap)="onSubmit()"
+        [text]="isLogin ? 'Login' : 'Sign-up'"
+        [isEnabled]="form.valid"
+      ></Button>
+      <Button
+        class="-outline"
+        [text]="isLogin ? 'Signup instead...' : 'Login instead...'"
+        (tap)="onSwitch()"
       ></Button>
     </StackLayout>
   </StackLayout>

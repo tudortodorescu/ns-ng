@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterExtensions } from 'nativescript-angular/router';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TextField } from 'tns-core-modules/ui/text-field';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'ns-auth',
     templateUrl: './auth.component.html',
     styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
     form: FormGroup;
     emailControlIsValid = true;
     passwordControlIsValid = true;
+    isLogin: boolean = true;
+    @ViewChild('passwordEl', { static: false }) passowrdEl: ElementRef<TextField>;
+    @ViewChild('emailEl', { static: false }) emailEl: ElementRef<TextField>;
+    private _subscriptionList: Subscription[] = [];
 
-    constructor(
-        private router: RouterExtensions
-    ) { }
+    constructor() { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -33,10 +36,50 @@ export class AuthComponent implements OnInit {
                 ]
             })
         });
+
+        this._subscriptionList.push(
+            this.form.get('email').statusChanges.subscribe(emailStatus => {
+                this.emailControlIsValid = emailStatus === 'VALID';
+            }),
+            this.form.get('password').statusChanges.subscribe(passwordStatus => {
+                this.passwordControlIsValid = passwordStatus === 'VALID';
+            })
+        )
     }
 
-    onSignin() {
-        this.router.navigate(['/today'], { clearHistory: true });
+    ngOnDestroy() {
+        if (this._subscriptionList.length > 0) {
+            this._subscriptionList.forEach((subscription: Subscription) => {
+                subscription.unsubscribe();
+            })
+        }
+    }
+
+    onSubmit() {
+        this.emailEl.nativeElement.focus();
+        this.passowrdEl.nativeElement.focus();
+        this.passowrdEl.nativeElement.dismissSoftInput();
+
+        if (!this.form.valid) return;
+
+        const email = this.form.get('email').value;
+        const password = this.form.get('password').value;
+        this.form.reset();
+        this.emailControlIsValid = true;
+        this.passwordControlIsValid = true;
+
+        console.log(email, password);
+
+        if (this.isLogin) {
+            console.log('Loggin in...')
+        } else {
+            console.log('Signing up...')
+        }
+
+    }
+
+    onSwitch() {
+        this.isLogin = !this.isLogin;
     }
 
 }

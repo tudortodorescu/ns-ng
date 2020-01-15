@@ -4,23 +4,19 @@ FlexboxLayout {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    Button {
+        width: 300;
+        &.-success {
+            background: $success;
+            border-color: $success;
+            color: white;
+        }
+
+        &.-fail {
+            background: $fail;
+            border-color: $fail;
+            color: white;
+        }
+    }
 }
-
-.btn {
-    width: 300;
-}
-
-.btn-success {
-    background: $success;
-    border-color: $success;
-    color: white;
-}
-
-.btn-fail {
-    background: $fail;
-    border-color: $fail;
-    color: white;
-}
-
-
-
