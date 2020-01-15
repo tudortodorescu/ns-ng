@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { take } from 'rxjs/operators';
+import { ChallengeService } from '../challenge.service';
+import { Challenge } from '../challenge.model';
 
 @Component({
     selector: 'ns-current-challenge',
@@ -12,20 +15,25 @@ import { RouterExtensions } from 'nativescript-angular/router';
 })
 export class CurrentChallengeComponent implements OnInit {
 
+    isEditDisabled: boolean = false;
+
     constructor(
-        private router: RouterExtensions
+        private router: RouterExtensions,
+        private challengesService: ChallengeService
     ) { }
 
     ngOnInit() {
+        this.challengesService.currentChallenge.pipe(take(1)).subscribe((challenge: Challenge) => {
+            this.isEditDisabled = (challenge === null);
+            console.log('isEditDisabled',this.isEditDisabled);
+        });
     }
 
     onTapReplace() {
-        console.log('onTapReplace');
         this.router.navigate(['/challenges/replace']);
     }
 
     onTapEdit() {
-        console.log('onTapEdit');
         this.router.navigate(['/challenges/edit']);
     }
 

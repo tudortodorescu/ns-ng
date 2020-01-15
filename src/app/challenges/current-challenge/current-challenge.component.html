@@ -15,6 +15,7 @@
   <ActionItem
     ios.position="right"
     android.position="actionBar"
+    *ngIf="!isEditDisabled"
     (tap)="onTapEdit()"
   >
     <Label

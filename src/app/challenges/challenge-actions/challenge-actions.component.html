@@ -4,6 +4,7 @@
       class="-success -rounded-lg"
       text="Complete"
       (tap)="onAction('complete')"
+      [isEnabled]="!done"
       *ngIf="action !== 'complete'"
     ></Button>
     <Button
@@ -19,6 +20,7 @@
       class="-fail -rounded-lg"
       text="Failed"
       (tap)="onAction('fail')"
+      [isEnabled]="!done"
       *ngIf="action !== 'fail'"
     ></Button>
     <Button

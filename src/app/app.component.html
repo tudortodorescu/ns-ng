@@ -2,7 +2,8 @@
   <FlexboxLayout tkDrawerContent class="drawer-container">
     <Button
       text="Logout"
-      class="-outline -rounded-lg"
+      width="80%"
+      class="-outline"
       [nsRouterLink]="['/']"
       [clearHistory]="true"
       (tap)="onLogout()"

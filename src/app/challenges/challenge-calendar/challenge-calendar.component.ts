@@ -5,7 +5,7 @@ import { DayModalComponent } from '../day-modal/day-modal.component';
 import { ChallengeService } from '../challenge.service';
 import { Challenge } from '../challenge.model';
 import { Subscription } from 'rxjs';
-import { Day } from '../day.model';
+import { Day, DayStatus } from '../day.model';
 
 @Component({
     selector: 'ns-challenge-calendar',
@@ -16,6 +16,7 @@ export class ChallengeCalendarComponent implements OnInit, OnDestroy {
     weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     currentChallenge: Challenge;
     private _subscriptionList: Subscription[] = [];
+    DayStatus = DayStatus;
 
     constructor(
         private modalDialog: ModalDialogService,
@@ -64,9 +65,12 @@ export class ChallengeCalendarComponent implements OnInit, OnDestroy {
         this.modalDialog.showModal(DayModalComponent, {
             fullscreen: true,
             viewContainerRef: (this.uiService.getRootVCRef() || this.vcRef),
-            context: { date: day.date }
-        }).then((action: string) => {
-            console.log('action', action);
+            context: { date: day.date, status: day.status }
+        }).then((status: DayStatus) => {
+            if (status === DayStatus.Open) {
+                return;
+            }
+            this.challengeService.updateDayStatus(day.dayInMonth, status);
         });
     }
 }

@@ -23,6 +23,7 @@
       <Label class="h1 text-center" [text]="currentDay.date | date"></Label>
       <ns-challenge-actions
         (actionSelect)="onActionSelected($event)"
+        [chosen]="getActionName()"
         cancelText="Reset"
       ></ns-challenge-actions>
     </StackLayout>

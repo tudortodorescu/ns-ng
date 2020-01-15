@@ -25,10 +25,21 @@ export class ChallengeService {
         this._currentChallenge.next(newChallenge);
     }
 
-    updateDayStatus(dayInMonth: number, status: DayStatus) {
-        // console.log('dayInMonth', dayInMonth);
-        // console.log('status', status);
+    updateChallenge(title: string, description: string) {
+        this._currentChallenge.pipe(take(1)).subscribe((challenge: Challenge) => {
+            const updatedChallenge = new Challenge(
+                title,
+                description,
+                challenge.year,
+                challenge.month,
+                challenge.days
+            );
+            // Send to a server
+            this._currentChallenge.next(updatedChallenge);
+        });
+    }
 
+    updateDayStatus(dayInMonth: number, status: DayStatus) {
         this._currentChallenge.pipe(take(1)).subscribe((challenge: Challenge) => {
             if (!challenge || challenge.days.length < dayInMonth) {
                 return;
@@ -38,8 +49,6 @@ export class ChallengeService {
             );
             challenge.days[dayIndex].status = status;
             this._currentChallenge.next(challenge);
-
-            console.log('challenge.days[dayIndex]', challenge.days[dayIndex]);
             // Save this to a server
         });
     }
