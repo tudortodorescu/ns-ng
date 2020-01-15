@@ -1,18 +1,34 @@
-<GridLayout rows="auto,*,*,*,*,*,*" columns="*,*,*,*,*,*,*">
-  <Label
-    class="week-day-label"
-    *ngFor="let weekDay of weekDays; let i = index"
-    [text]="weekDay"
-    row="0"
-    [col]="i"
-  ></Label>
-  <FlexboxLayout
-    class="day"
-    *ngFor="let day of days; let i = index"
-    [row]="getRow(i, day)"
-    [col]="day.dayInWeek"
-    (tap)="onChangeStatus()"
-  >
-    <Label [text]="day.dayInMonth"></Label>
-  </FlexboxLayout>
-</GridLayout>
+<FlexboxLayout class="no-challenge" *ngIf="!currentChallenge">
+  <Label class="h1" text="No challenge found!"></Label>
+  <Button
+    class="-primary -roundedlg"
+    text="Create One!"
+    [nsRouterLink]="['/challenges/replace']"
+    pageTransition="slideRight"
+  ></Button>
+</FlexboxLayout>
+<FlexboxLayout class="challenge-page" *ngIf="currentChallenge">
+  <StackLayout marginBottom="20">
+    <Label class="h1" [text]="currentChallenge.title"></Label>
+    <Label class="body" [text]="currentChallenge.description"></Label>
+  </StackLayout>
+  <GridLayout rows="auto,*,*,*,*,*,*" columns="*,*,*,*,*,*,*">
+    <Label
+      class="week-day-label"
+      *ngFor="let weekDay of weekDays; let i = index"
+      [text]="weekDay"
+      row="0"
+      [col]="i"
+    ></Label>
+    <FlexboxLayout
+      class="day"
+      [ngClass]="{'not-settable': !getIsSettable(day.dayInMonth)}"
+      *ngFor="let day of currentChallenge.days; let i = index"
+      [row]="getRow(i, day)"
+      [col]="day.dayInWeek"
+      (tap)="onChangeStatus(day)"
+    >
+      <Label [text]="day.dayInMonth"></Label>
+    </FlexboxLayout>
+  </GridLayout>
+</FlexboxLayout>

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/co
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TextField } from 'tns-core-modules/ui/text-field';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'ns-auth',
@@ -17,9 +18,15 @@ export class AuthComponent implements OnInit, OnDestroy {
     @ViewChild('emailEl', { static: false }) emailEl: ElementRef<TextField>;
     private _subscriptionList: Subscription[] = [];
 
-    constructor() { }
+    constructor(
+        private router: Router
+    ) { }
 
     ngOnInit() {
+
+        // TEMP
+        this.router.navigate(['/challenges']);
+
         this.form = new FormGroup({
             email: new FormControl(null, {
                 updateOn: 'blur',
@@ -76,6 +83,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             console.log('Signing up...')
         }
 
+        this.router.navigate(['/challenges']);
     }
 
     onSwitch() {

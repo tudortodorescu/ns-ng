@@ -1,5 +1,21 @@
 @import "../../../theme/colors";
 
+FlexboxLayout.no-challenge {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    Button {
+        width: 70%;
+    }
+}
+
+FlexboxLayout.challenge-page {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20;
+}
+
 .week-day-label, .day {
     text-align: center;
 }

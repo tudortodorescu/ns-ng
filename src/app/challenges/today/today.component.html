@@ -2,15 +2,29 @@
   title="Today's Challenge"
   [showBackButton]="false"
 ></ns-action-bar>
-<StackLayout>
-  <Image
-    src="res://sonic"
-    stretch="none"
-    horizontalAlignment="center"
-    margin="30 auto"
-  ></Image>
-  <ns-challenge-actions
-    (actionSelect)="onActionSelected($event)"
-    cancelText="Reset"
-  ></ns-challenge-actions>
-</StackLayout>
+<ScrollView>
+  <StackLayout paddingBottom="50">
+    <Image
+      src="res://sonic"
+      stretch="none"
+      horizontalAlignment="center"
+      margin="30 auto"
+    ></Image>
+    <FlexboxLayout class="no-challenge" *ngIf="!currentDay">
+      <Label class="h1" text="No challenge found!"></Label>
+      <Button
+        class="-primary -roundedlg"
+        text="Create One!"
+        [nsRouterLink]="['/challenges/replace']"
+        pageTransition="slideRight"
+      ></Button>
+    </FlexboxLayout>
+    <StackLayout *ngIf="currentDay">
+      <Label class="h1 text-center" [text]="currentDay.date | date"></Label>
+      <ns-challenge-actions
+        (actionSelect)="onActionSelected($event)"
+        cancelText="Reset"
+      ></ns-challenge-actions>
+    </StackLayout>
+  </StackLayout>
+</ScrollView>

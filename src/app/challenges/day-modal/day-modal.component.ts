@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
-import { EnumChallengeActions } from '../challenge-actions/challenge-actions.component';
 
 @Component({
     selector: 'ns-day-modal',
@@ -22,4 +21,10 @@ export class DayModalComponent implements OnInit {
         this.modalParams.closeCallback(action);
     }
 
+}
+
+export enum EnumChallengeActions {
+    COMPLETE = 'complete',
+    FAIL = 'fail',
+    CANCEL = 'cancel'
 }
