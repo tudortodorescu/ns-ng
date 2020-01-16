@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TextField } from 'tns-core-modules/ui/text-field';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthService, FirebaseAuthSigninResponse } from './auth.service';
+import { AuthService } from './auth.service';
 
 @Component({
     selector: 'ns-auth',
@@ -22,7 +22,8 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     constructor(
         private router: Router,
-        private authService: AuthService
+        private authService: AuthService,
+        private changeDetection: ChangeDetectorRef
     ) { }
 
     ngOnInit() {
@@ -35,7 +36,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                 ]
             }),
             password: new FormControl(null, {
-                updateOn: 'blur',
+                updateOn: 'change',
                 validators: [
                     Validators.required,
                     Validators.minLength(6)
@@ -67,22 +68,33 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.emailEl.nativeElement.dismissSoftInput();
         this.passowrdEl.nativeElement.dismissSoftInput();
         this.isLoading = true;
+        this.changeDetection.detectChanges();
 
         const email = this.form.get('email').value;
         const password = this.form.get('password').value;
-        this.form.reset();
+        // this.form.reset();
         this.emailControlIsValid = true;
         this.passwordControlIsValid = true;
 
-        if (this.isLogin) {
-            this.authService.signIn(email, password).subscribe(() => this.isLoading = false);
-            this.authService.signInSuccessful.subscribe((signInSuccessful: boolean) => {
-                if (signInSuccessful) this.router.navigate(['/challenges'])
-            });
+        if (this.isLogin) this.authService.signIn(email, password).subscribe(() => {
+            this.router.navigate(['/challenges']);
+            this.isLoading = false;
+            this.changeDetection.detectChanges();
 
-        } else {
-            this.authService.signUp(email, password);
-        }
+        }, err => {
+            this.isLoading = false;
+            this.changeDetection.detectChanges();
+        });
+        else this.authService.signUp(email, password).subscribe(() => {
+            alert("Congratulations! You just signed-up and have access to all the cool features!")
+            this.router.navigate(['/challenges']);
+            this.isLoading = false;
+            this.changeDetection.detectChanges();
+
+        }, err => {
+            this.isLoading = false;
+            this.changeDetection.detectChanges();
+        });
     }
 
     onSwitch() {

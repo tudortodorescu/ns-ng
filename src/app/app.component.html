@@ -1,11 +1,10 @@
 <RadSideDrawer #drawer>
   <FlexboxLayout tkDrawerContent class="drawer-container">
+    <!-- <Label class="h1" [text]="authEmail" color="white"></Label> -->
     <Button
       text="Logout"
       width="80%"
       class="-outline"
-      [nsRouterLink]="['/']"
-      [clearHistory]="true"
       (tap)="onLogout()"
     ></Button>
   </FlexboxLayout>

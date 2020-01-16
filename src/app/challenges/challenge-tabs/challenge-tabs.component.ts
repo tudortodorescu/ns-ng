@@ -3,6 +3,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { ChallengeService } from '../challenge.service';
+import { AuthService } from '~/app/auth/auth.service';
 
 @Component({
     selector: 'ns-challenge-tabs',

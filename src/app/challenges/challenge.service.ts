@@ -1,9 +1,13 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { take, tap } from 'rxjs/operators';
+import { BehaviorSubject, of, Observable } from "rxjs";
+import { take, tap, switchMap } from 'rxjs/operators';
 import { Challenge, ChallengeModel } from "./challenge.model";
 import { DayStatus } from "./day.model";
 import { HttpClient } from "@angular/common/http";
+import { AuthService } from "../auth/auth.service";
+import { User } from "../auth/user.model";
+
+const FIREBASE_API_URL_CHALLENGE = 'https://ns-ng-course-7613c.firebaseio.com/challenge';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +16,8 @@ export class ChallengeService {
     private _currentChallenge = new BehaviorSubject<Challenge>(null);
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private authService: AuthService
     ) {
 
     }
@@ -22,14 +27,33 @@ export class ChallengeService {
     }
 
     private _saveToServer(challenge: Challenge) {
-        const apiUrl = 'https://ns-ng-course-7613c.firebaseio.com/challenge.json';
-        this.http.put<ChallengeModel>(apiUrl, challenge).subscribe();
+        this.authService.user.pipe(
+            take(1),
+            switchMap((currentUser: User) => {
+                if (!currentUser || !currentUser.isAuth) {
+                    return of(null);
+                }
+                return this.http.put<ChallengeModel>(
+                    `${FIREBASE_API_URL_CHALLENGE}/${currentUser.id}.json?auth=${currentUser.token}`,
+                    challenge
+                );
+            })
+        ).subscribe();
     }
 
-    fetchCurrentChallenge() {
-        return this.http.get<ChallengeModel>('https://ns-ng-course-7613c.firebaseio.com/challenge.json')
-            .pipe(tap((resData: ChallengeModel) => {
-                if (resData) {
+    fetchCurrentChallenge(): Observable<ChallengeModel|null> {
+        return this.authService.user.pipe(
+            take(1),
+            switchMap((currentUser: User) => {
+                if (!currentUser || !currentUser.isAuth) {
+                    return of(null);
+                }
+                return this.http.get<ChallengeModel>(
+                    `${FIREBASE_API_URL_CHALLENGE}/${currentUser.id}.json?auth=${currentUser.token}`
+                );
+            }),
+            tap((resData: ChallengeModel) => {
+                if (!!resData) {
                     const loadedChallenge = new Challenge(
                         resData.title,
                         resData.description,
@@ -38,8 +62,11 @@ export class ChallengeService {
                         resData._days
                     );
                     this._currentChallenge.next(loadedChallenge);
+                } else {
+                    this._currentChallenge.next(null);
                 }
-            }));
+            })
+        );
     }
 
     createNewChallenge(title: string, description: string) {

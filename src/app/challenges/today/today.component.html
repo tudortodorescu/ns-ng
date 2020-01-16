@@ -3,13 +3,7 @@
   [showBackButton]="false"
 ></ns-action-bar>
 <ScrollView>
-  <StackLayout paddingBottom="50">
-    <Image
-      src="res://sonic"
-      stretch="none"
-      horizontalAlignment="center"
-      margin="30 auto"
-    ></Image>
+  <StackLayout padding="20 0 50 0">
     <FlexboxLayout class="no-challenge" *ngIf="!currentDay">
       <Label class="h1" text="No challenge found!"></Label>
       <Button
@@ -28,5 +22,11 @@
         cancelText="Reset"
       ></ns-challenge-actions>
     </StackLayout>
+    <Image
+      src="res://sonic"
+      stretch="none"
+      horizontalAlignment="center"
+      margin="30 auto"
+    ></Image>
   </StackLayout>
 </ScrollView>
