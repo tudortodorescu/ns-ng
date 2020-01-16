@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Page } from 'tns-core-modules/ui/page/page';
+import { ChallengeService } from '../challenge.service';
 
 @Component({
     selector: 'ns-challenge-tabs',
@@ -13,24 +14,41 @@ import { Page } from 'tns-core-modules/ui/page/page';
     ]
 })
 export class ChallengeTabsComponent implements OnInit {
+    isLoading: boolean = false;
 
     constructor(
         private router: RouterExtensions,
         private active: ActivatedRoute,
-        private page: Page
+        private page: Page,
+        private challengeService: ChallengeService
     ) { }
 
     ngOnInit() {
-        this.router.navigate(
-            [{
-                outlets: {
-                    today: ['today'],
-                    currentChallenge: ['current-challenge']
-                }
-            }],
-            { relativeTo: this.active }
+        this.isLoading = true;
+        this.challengeService.fetchCurrentChallenge().subscribe(
+            res => {
+                this.isLoading = false;
+                this._loadTabRoutes();
+            }, err => {
+                console.error(err);
+                this.isLoading = false;
+            }
         );
         this.page.actionBarHidden = true;
+    }
+
+    private _loadTabRoutes() {
+        setTimeout(() => {
+            this.router.navigate(
+                [{
+                    outlets: {
+                        today: ['today'],
+                        currentChallenge: ['current-challenge']
+                    }
+                }],
+                { relativeTo: this.active }
+            );
+        }, 10);
     }
 
 }

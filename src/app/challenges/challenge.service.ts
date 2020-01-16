@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { take } from 'rxjs/operators';
-import { Challenge } from "./challenge.model";
+import { take, tap } from 'rxjs/operators';
+import { Challenge, ChallengeModel } from "./challenge.model";
 import { DayStatus } from "./day.model";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root'
@@ -10,8 +11,35 @@ import { DayStatus } from "./day.model";
 export class ChallengeService {
     private _currentChallenge = new BehaviorSubject<Challenge>(null);
 
+    constructor(
+        private http: HttpClient
+    ) {
+
+    }
+
     get currentChallenge() {
         return this._currentChallenge.asObservable();
+    }
+
+    private _saveToServer(challenge: Challenge) {
+        const apiUrl = 'https://ns-ng-course-7613c.firebaseio.com/challenge.json';
+        this.http.put<ChallengeModel>(apiUrl, challenge).subscribe();
+    }
+
+    fetchCurrentChallenge() {
+        return this.http.get<ChallengeModel>('https://ns-ng-course-7613c.firebaseio.com/challenge.json')
+            .pipe(tap((resData: ChallengeModel) => {
+                if (resData) {
+                    const loadedChallenge = new Challenge(
+                        resData.title,
+                        resData.description,
+                        resData.year,
+                        resData.month,
+                        resData._days
+                    );
+                    this._currentChallenge.next(loadedChallenge);
+                }
+            }));
     }
 
     createNewChallenge(title: string, description: string) {
@@ -20,9 +48,9 @@ export class ChallengeService {
             description,
             new Date().getFullYear(),
             new Date().getMonth()
-        )
-        // Save it to server
+        );
         this._currentChallenge.next(newChallenge);
+        this._saveToServer(newChallenge);
     }
 
     updateChallenge(title: string, description: string) {
@@ -34,8 +62,8 @@ export class ChallengeService {
                 challenge.month,
                 challenge.days
             );
-            // Send to a server
             this._currentChallenge.next(updatedChallenge);
+            this._saveToServer(updatedChallenge);
         });
     }
 
@@ -49,7 +77,7 @@ export class ChallengeService {
             );
             challenge.days[dayIndex].status = status;
             this._currentChallenge.next(challenge);
-            // Save this to a server
+            this._saveToServer(challenge);
         });
     }
 

@@ -36,3 +36,11 @@ export class Challenge {
         return [...this._days];
     }
 }
+
+export interface ChallengeModel {
+    title: string,
+    description: string,
+    month: number,
+    year: number,
+    _days: Day[]
+}

@@ -25,7 +25,6 @@ export class CurrentChallengeComponent implements OnInit {
     ngOnInit() {
         this.challengesService.currentChallenge.pipe(take(1)).subscribe((challenge: Challenge) => {
             this.isEditDisabled = (challenge === null);
-            console.log('isEditDisabled',this.isEditDisabled);
         });
     }
 

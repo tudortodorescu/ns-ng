@@ -25,7 +25,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         // TEMP
-        this.router.navigate(['/challenges']);
+        // this.router.navigate(['/challenges']);
 
         this.form = new FormGroup({
             email: new FormControl(null, {
@@ -63,11 +63,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        this.emailEl.nativeElement.focus();
-        this.passowrdEl.nativeElement.focus();
-        this.passowrdEl.nativeElement.dismissSoftInput();
-
         if (!this.form.valid) return;
+
+        this.emailEl.nativeElement.dismissSoftInput();
+        this.passowrdEl.nativeElement.dismissSoftInput();
 
         const email = this.form.get('email').value;
         const password = this.form.get('password').value;
