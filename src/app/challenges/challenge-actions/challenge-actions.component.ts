@@ -24,9 +24,7 @@ export class ChallengeActionsComponent implements OnInit, OnChanges {
             }
         }
         if (changes.startDone) {
-            if (changes.startDone.currentValue) {
-                this.done = true;
-            }
+            this.done = (changes.startDone.currentValue);
         }
     }
 

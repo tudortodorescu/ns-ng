@@ -25,6 +25,7 @@
         [autocorrect]="false"
         autocapitalizationType="none"
         formControlName="email"
+        [isEnabled]="!isLoading"
         #emailEl
       ></TextField>
       <Label
@@ -47,6 +48,7 @@
         [secure]="true"
         hint="Min 6 characters"
         formControlName="password"
+        [isEnabled]="!isLoading"
         #passwordEl
       ></TextField>
       <Label
@@ -62,12 +64,15 @@
         (tap)="onSubmit()"
         [text]="isLogin ? 'Login' : 'Sign-up'"
         [isEnabled]="form.valid"
+        *ngIf="!isLoading"
       ></Button>
       <Button
         class="-outline"
         [text]="isLogin ? 'Signup instead...' : 'Login instead...'"
         (tap)="onSwitch()"
+        *ngIf="!isLoading"
       ></Button>
+      <ActivityIndicator [busy]="isLoading" marginTop="30"></ActivityIndicator>
     </StackLayout>
   </StackLayout>
 </FlexboxLayout>

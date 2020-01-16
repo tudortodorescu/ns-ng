@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TextField } from 'tns-core-modules/ui/text-field';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService, FirebaseAuthSigninResponse } from './auth.service';
 
 @Component({
     selector: 'ns-auth',
@@ -14,19 +15,17 @@ export class AuthComponent implements OnInit, OnDestroy {
     emailControlIsValid = true;
     passwordControlIsValid = true;
     isLogin: boolean = true;
+    isLoading: boolean = false;
     @ViewChild('passwordEl', { static: false }) passowrdEl: ElementRef<TextField>;
     @ViewChild('emailEl', { static: false }) emailEl: ElementRef<TextField>;
     private _subscriptionList: Subscription[] = [];
 
     constructor(
-        private router: Router
+        private router: Router,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
-
-        // TEMP
-        // this.router.navigate(['/challenges']);
-
         this.form = new FormGroup({
             email: new FormControl(null, {
                 updateOn: 'blur',
@@ -67,6 +66,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
         this.emailEl.nativeElement.dismissSoftInput();
         this.passowrdEl.nativeElement.dismissSoftInput();
+        this.isLoading = true;
 
         const email = this.form.get('email').value;
         const password = this.form.get('password').value;
@@ -74,15 +74,15 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.emailControlIsValid = true;
         this.passwordControlIsValid = true;
 
-        console.log(email, password);
-
         if (this.isLogin) {
-            console.log('Loggin in...')
-        } else {
-            console.log('Signing up...')
-        }
+            this.authService.signIn(email, password).subscribe(() => this.isLoading = false);
+            this.authService.signInSuccessful.subscribe((signInSuccessful: boolean) => {
+                if (signInSuccessful) this.router.navigate(['/challenges'])
+            });
 
-        this.router.navigate(['/challenges']);
+        } else {
+            this.authService.signUp(email, password);
+        }
     }
 
     onSwitch() {
