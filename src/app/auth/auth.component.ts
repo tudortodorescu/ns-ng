@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy, ChangeDetectorRef 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TextField } from 'tns-core-modules/ui/text-field';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 @Component({
     selector: 'ns-auth',
@@ -21,7 +21,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     private _subscriptionList: Subscription[] = [];
 
     constructor(
-        private router: Router,
+        private router: RouterExtensions,
         private authService: AuthService,
         private changeDetection: ChangeDetectorRef
     ) { }
@@ -87,7 +87,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         });
         else this.authService.signUp(email, password).subscribe(() => {
             alert("Congratulations! You just signed-up and have access to all the cool features!")
-            this.router.navigate(['/challenges']);
+            this.router.navigate(['/challenges/tabs'], { clearHistory: true });
             this.isLoading = false;
             this.changeDetection.detectChanges();
 

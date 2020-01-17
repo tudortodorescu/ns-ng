@@ -6,7 +6,7 @@
   <StackLayout class="input-field">
     <Label
       class="label"
-      text="Title"
+      text="Challenge Title:"
       [ngClass]="{ invalid: !titleCtrl.valid && titleCtrl.touched }"
     ></Label>
     <TextField
@@ -25,7 +25,7 @@
   <StackLayout class="input-field">
     <Label
       class="label"
-      text="Description"
+      text="Challenge Title:"
       [ngClass]="{ invalid: !descriptionCtrl.valid && descriptionCtrl.touched }"
     ></Label>
     <TextView
@@ -43,8 +43,10 @@
   </StackLayout>
   <Button
     class="-primary"
-    text="Save"
+    width="80%"
+    [text]="isCreating ? 'Create New Challenge' : 'Modify Existing Challenge'"
     [isEnabled]="titleCtrl.valid && descriptionCtrl.valid"
     (tap)="onSubmit(titleCtrl.value, descriptionCtrl.value)"
   ></Button>
+  <Label *ngIf="isCreating && challengeExists" class="text-center" color="red" text="IMPORTANT: This will reset existing progress & restart challenge"></Label>
 </FlexboxLayout>

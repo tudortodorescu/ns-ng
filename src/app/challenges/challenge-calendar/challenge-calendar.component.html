@@ -8,11 +8,11 @@
   ></Button>
 </FlexboxLayout>
 <FlexboxLayout class="challenge-page" *ngIf="currentChallenge">
-  <StackLayout marginBottom="20">
-    <Label class="h1 text-center" [text]="currentChallenge.title"></Label>
+  <StackLayout marginBottom="20" marginTop="20">
+    <Label class="h1 text-center" [text]="currentChallenge.title" width="100%"></Label>
     <Label class="body text-center" [text]="currentChallenge.description"></Label>
   </StackLayout>
-  <GridLayout rows="auto,*,*,*,*,*,*" columns="*,*,*,*,*,*,*">
+  <GridLayout rows="auto,*,*,*,*,*,*" columns="*,*,*,*,*,*,*" padding="0 20">
     <Label
       class="week-day-label"
       *ngFor="let weekDay of weekDays; let i = index"

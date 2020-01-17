@@ -13,7 +13,6 @@ FlexboxLayout.challenge-page {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 20;
 }
 
 .week-day-label, .day {
@@ -32,8 +31,8 @@ FlexboxLayout.challenge-page {
     justify-content: center;
     align-items: center;
     margin: 10;
-    width: 50;
-    height: 50;
+    width: 40;
+    height: 40;
     border-color: $primary;
     border-width: 1;
     border-radius: 50%;

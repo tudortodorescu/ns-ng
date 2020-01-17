@@ -1,6 +1,6 @@
 {
   "nativescript": {
-    "id": "org.nativescript.nsng",
+    "id": "com.todorescu.challenges",
     "tns-ios": {
       "version": "6.3.0"
     },

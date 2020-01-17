@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageRoute, RouterExtensions } from 'nativescript-angular/router';
 import { ChallengeService } from '../challenge.service';
 import { Challenge } from '../challenge.model';
-import { take } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'ns-challenge-edit',
@@ -12,6 +12,7 @@ import { take } from 'rxjs/operators';
 export class ChallengeEditComponent implements OnInit {
 
     isCreating: boolean = true;
+    challengeExists: boolean = false;
     title: string = '';
     description: string = '';
 
@@ -25,13 +26,14 @@ export class ChallengeEditComponent implements OnInit {
         this.pageRoute.activatedRoute.subscribe(activatedRoute => {
             activatedRoute.paramMap.subscribe(paramMap => {
                 this.isCreating = (!paramMap.has('mode')) || (paramMap.get('mode') !== 'edit');
-
-                if (!this.isCreating) {
-                    this.challengeService.currentChallenge.pipe(take(1)).subscribe((challenge: Challenge) => {
-                        this.title = challenge.title;
-                        this.description = challenge.description;
-                    });
-                }
+                this.challengeService.currentChallenge.pipe(take(1)).subscribe((currentChallenge: Challenge) => {
+                    if (!this.isCreating) {
+                        this.title = currentChallenge.title;
+                        this.description = currentChallenge.description;
+                    } else {
+                        this.challengeExists = (currentChallenge !== null);
+                    }
+                });
             })
         });
     }
